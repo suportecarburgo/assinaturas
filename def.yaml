@@ -1,0 +1,39 @@
+- name: "Grupo Carburgo"
+  logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ASSINATURA%20DE%20EMAIL/LOGOS.png?raw=true"
+  website: "https://carburgo.com.br"
+  template_path: "templates/default.j2.html"
+
+- name: "Carburgo Seguros"
+  logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/carburgo_seguros.png?raw=tru"
+  website: "https://www.carburgo.com.br/seguros"
+  template_path: "templates/default.j2.html"
+
+- name: "Carburgo Corretora"
+  logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/corretora.PNG?raw=true"
+  website: "https://carburgo.com.br"
+  template_path: "templates/default.j2.html"
+
+- name: "Kia AutoVale"
+  logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/kia_autovale_preto.png?raw=true"
+  website: "https://www.kiaautovale.com.br/"
+  template_path: "templates/default.j2.html"
+
+- name: "Citroen Premiere"
+  logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/premiere_citroen.png?raw=true"
+  website: "https://www.citroenpremiere.com.br/"
+  template_path: "templates/default.j2.html"
+
+- name: "Carburgo"
+  logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/carburgo_vw.png?raw=true"
+  website: "https://carburgo.com.br"
+  template_path: "templates/default.j2.html"
+
+- name: "Fever Carburgo"
+  template_path: "templates/default.j2.html"
+  website: "https://fevercarburgo.com.br"
+  logo_url: https://raw.githubusercontent.com/suportecarburgo/assinaturas/refs/heads/main/ASSINATURA%20DE%20EMAIL/fever%20carburgo%20vertical%20verde%404x.png
+
+- name: "Eiffel"
+  template_path: "templates/default.j2.html"
+  logo_url: https://raw.githubusercontent.com/suportecarburgo/assinaturas/refs/heads/main/ASSINATURA%20DE%20EMAIL/logo%20peugeot%20eiffel%20premiere.png
+  website: "https://www.eiffelpeugeot.com.br"

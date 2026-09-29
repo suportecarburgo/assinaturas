@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Assinatura email Carburgo</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="main-wraper">
+            <div class="flex-wraper">
+                <div class="logos-sect">
+                    <img src={{logo_url}} style="max-width: 80%;">
+                </div>
+                <div class="infos-sect">
+                    <div class="name">
+                        <h2><span style="color: #36265F">{{first_name}}</span> {{last_name}}</h2>
+                        <h3>{{role}}</h3>
+                    </div>
+                    <div class="social-icons">
+                        {% for email in listof_email%}
+                        <div class="single-icon">        
+                            <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true> <a href="mailto:{{email}}">{{email}}</a>
+                        </div>
+                        {% endfor %}
+
+                        {% for phone in listof_phone%}
+                        <div class="single-icon">
+                            <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true><a href="tel:{{phone[1]}}">{{phone[0]}}</a>
+                        </div>
+                        {% endfor %}
+
+                        <div class="single-icon">        
+                            <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true> <a href="{{website}}">{{website}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<style>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        clear: both;
+        font-family: 'Poppins', sans-serif;
+    }
+    .main-wraper{
+        padding: 0px 50px;
+        max-height: 600px;
+        max-width: 1400px;
+        background-image: url('https://github.com/suportecarburgo/assinaturas/blob/main/ASSINATURA%20DE%20EMAIL/BG0.png?raw=true');
+        background-repeat: no-repeat;
+        background-size: 200dvh auto;
+        background-position: right center;
+
+        border-right: #36265F 45px solid;
+        border-left: #36265F 45px solid;
+    }
+
+    .flex-wraper{
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+    }
+
+    .logos-sect{
+        padding-left: 100px;
+        border-left: 5px solid #62BEAC;
+    }
+
+    .infos-sect{
+        padding: 50px;
+    }
+
+    .infos-sect h2{
+        font-size: 30px;
+        color: #000;
+    }
+
+    .name{
+        border-bottom: 3px solid #62BEAC;
+        padding: 10px 0;
+    }
+
+    .social-icons{
+        margin: 15px 0;
+    }
+
+    .single-icon {
+        display: flex;
+        align-items: center;
+    }
+
+    .single-icon a{
+        color: #000;
+        text-decoration: none;
+        margin: 15px;
+    }
+
+    .single-icon img{
+        height: 40px;
+    }
+
+</style>
