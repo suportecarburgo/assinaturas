@@ -13,48 +13,68 @@
 
     <body>
         <div class="main-wraper">
-            <div class="flex-wraper">
-                <div class="logos-sect">
-                    <img src={{logo_url}} style="max-width: 80%;">
+            <div class="content-grid">
+
+                <div class="name infos-sect" style="grid-area: nome;">
+                    <h2><span style="color: #36265F">{{first_name}}</span> {{last_name}}</h2>
+                    <h3>{{role}}</h3>
                 </div>
-                <div class="infos-sect">
-                    <div class="name">
-                        <h2><span style="color: #36265F">{{first_name}}</span> {{last_name}}</h2>
-                        <h3>{{role}}</h3>
+                
+                <div class="social-icons infos-sect" style="grid-area: telefone;">
+                    {% for email in listof_email%}
+                    <div class="single-icon">        
+                        <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true> <a href="mailto:{{email}}">{{email}}</a>
                     </div>
-                    <div class="social-icons">
-                        {% for email in listof_email%}
-                        <div class="single-icon">        
-                            <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true> <a href="mailto:{{email}}">{{email}}</a>
-                        </div>
-                        {% endfor %}
+                    {% endfor %}
 
-                        {% for phone in listof_phone%}
-                        <div class="single-icon">
-                            <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true><a href="tel:{{phone[1]}}">{{phone[0]}}</a>
-                        </div>
-                        {% endfor %}
+                    {% for phone in listof_phone%}
+                    <div class="single-icon">
+                        <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true><a href="tel:{{phone[1]}}">{{phone[0]}}</a>
+                    </div>
+                    {% endfor %}
 
-                        <div class="single-icon">        
-                            <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true> <a href="{{website}}">{{website}}</a>
-                        </div>
+                    <div class="single-icon">        
+                        <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true> <a href="{{website}}">{{website}}</a>
                     </div>
                 </div>
+
+                <div class="logos-sect" style="grid-area: foto;">
+                    <img src="{{logo_url}}" style="width: 30vw;">
+                </div>
+
             </div>
         </div>
     </body>
 </html>
 
 <style>
+   
     *{
         box-sizing: border-box;
         margin: 0;
         clear: both;
         font-family: 'Poppins', sans-serif;
     }
+
+    @media (width < 800px) {
+        h2 {
+            font-size: 20px !important;
+            width: min-content;
+            padding: 1em !important;
+        }
+
+        a {
+            font-size: 12px;
+        }
+        .single-icon img {
+            height: 32px !important;
+        }
+    }
+
     .main-wraper{
-        padding: 0px 50px;
+        padding: 0px 5vw;
         max-height: 600px;
+        min-width: 580px;
         max-width: 1400px;
         background-image: url('https://github.com/suportecarburgo/assinaturas/blob/main/ASSINATURA%20DE%20EMAIL/BG0.png?raw=true');
         background-repeat: no-repeat;
@@ -65,33 +85,65 @@
         border-left: #36265F 45px solid;
     }
 
-    .flex-wraper{
-        display: flex;
+    .content-grid{
+        display: grid;
+
+        justify-items: center;
         align-items: center;
-        flex-direction: row-reverse;
+        grid-template-areas: 
+            "nome foto"
+            "telefone foto"
+        ;
+
+        grid-template-columns: auto 40vw;
+        grid-template-rows: 30% auto;
+
+        @media (width < 800px) {
+
+            .logos-sect {
+                padding-left: 0px !important;
+            }
+
+            grid-template-columns: 1fr 2fr;
+            grid-template-rows: auto auto;
+            
+            grid-template-areas: 
+                "nome telefone"
+                "foto foto"
+            ;
+
+        }
     }
 
     .logos-sect{
         padding-left: 100px;
-        border-left: 5px solid #62BEAC;
-    }
 
-    .infos-sect{
-        padding: 50px;
+        @media (width > 800px) {
+            border-left: 3px solid #62BEAC;
+        }
     }
-
+    
     .infos-sect h2{
+        padding: 50px;
         font-size: 30px;
         color: #000;
     }
 
     .name{
-        border-bottom: 3px solid #62BEAC;
         padding: 10px 0;
     }
 
     .social-icons{
         margin: 15px 0;
+
+        @media (width > 800px) {
+            padding-right: 2em;
+        }
+        @media (width < 800px) {
+            border-left: 3px solid #62BEAC;
+            padding-left: 2em !important;
+            justify-self: left;
+        }
     }
 
     .single-icon {
@@ -108,5 +160,6 @@
     .single-icon img{
         height: 40px;
     }
+
 
 </style>
