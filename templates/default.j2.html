@@ -48,7 +48,6 @@
 </html>
 
 <style>
-   
     *{
         box-sizing: border-box;
         margin: 0;
@@ -59,16 +58,35 @@
     @media (width < 800px) {
         h2 {
             font-size: 20px !important;
-            width: min-content;
             padding: 1em !important;
+            padding-bottom: 3px !important;
         }
 
+        h3 {
+            font-size: 15px !important;
+            padding: 1em !important;
+            padding-top: 3px !important;
+        }
+        
         a {
             font-size: 12px;
         }
         .single-icon img {
             height: 32px !important;
         }
+    }
+
+    .infos-sect h2{
+        padding: 50px;
+        padding-bottom: 6px;
+        font-size: 30px;
+        color: #000;
+    }
+
+    .name {
+        width: 100%;
+        align-self: center;
+        text-align: center;
     }
 
     .main-wraper{
@@ -91,7 +109,7 @@
         justify-items: center;
         align-items: center;
         grid-template-areas: 
-            "nome foto"
+            "nome nome"
             "telefone foto"
         ;
 
@@ -104,33 +122,15 @@
                 padding-left: 0px !important;
             }
 
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 2fr 1fr;
             grid-template-rows: auto auto;
             
             grid-template-areas: 
-                "nome telefone"
                 "foto foto"
+                "nome telefone"
             ;
 
         }
-    }
-
-    .logos-sect{
-        padding-left: 100px;
-
-        @media (width > 800px) {
-            border-left: 3px solid #62BEAC;
-        }
-    }
-    
-    .infos-sect h2{
-        padding: 50px;
-        font-size: 30px;
-        color: #000;
-    }
-
-    .name{
-        padding: 10px 0;
     }
 
     .social-icons{
@@ -138,7 +138,9 @@
 
         @media (width > 800px) {
             padding-right: 2em;
+            border-right: 3px solid #62BEAC;
         }
+
         @media (width < 800px) {
             border-left: 3px solid #62BEAC;
             padding-left: 2em !important;
@@ -160,6 +162,4 @@
     .single-icon img{
         height: 40px;
     }
-
-
 </style>
