@@ -1,165 +1,125 @@
+<!--
+{#
+DOCUMENTAÇÃO DO TEMPLATE DE ASSINATURA
+
+Este arquivo é um template Jinja2. O programa deve fornecer:
+- first_name, last_name e role: nome e cargo da pessoa;
+- logo_url e website: URLs públicas do logo e do site;
+- listof_email: lista de endereços de e-mail;
+- listof_phone: lista de pares [texto_exibido, telefone_para_link], por exemplo:
+  [["(51) 3594-9458", "5135949458"]].
+
+Fluxo de renderização:
+1. Outlook clássico seleciona o ramo MSO, construído com tabela e larguras fixas.
+2. Thunderbird e Zimbra selecionam o ramo não-MSO, construído com divs.
+3. Os loops Jinja geram uma linha para cada e-mail e telefone; o site aparece uma vez no final.
+4. O filtro | e escapa os valores inseridos como texto/atributo HTML.
+5. A folha CSS no head configura o ramo não-MSO. O ramo Outlook mantém estilos inline
+   por compatibilidade com o mecanismo de renderização Word.
+
+Os comentários condicionais MSO no corpo são funcionais: não removê-los. A largura total
+é 700 px; se ela for alterada, revisar as larguras das colunas nos dois ramos.
+#}
+-->
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Assinatura email Carburgo</title>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assinatura de e-mail</title>
+  <style>
+    .signature-shell {
+      width: 700px;
+      box-sizing: border-box;
+      border-left: 18px solid #36265F;
+      border-right: 18px solid #36265F;
+      background: #FFFFFF url('https://github.com/suportecarburgo/assinaturas/blob/main/ASSINATURA%20DE%20EMAIL/BG0.png?raw=true') no-repeat right center / 700px auto;
+      color: #000000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .signature-row {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: stretch;
+      width: 664px;
+    }
+    .signature-logo {
+      width: 284px;
+      box-sizing: border-box;
+      padding: 10px;
+      border-left: 4px solid #62BEAC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .signature-logo img { display: block; width: 250px; height: 151px; border: 0; }
+    .signature-info { width: 380px; box-sizing: border-box; padding: 12px 14px; font-family: Arial, Helvetica, sans-serif; }
+    .signature-person { font-size: 20px; line-height: 25px; font-weight: bold; color: #000000; }
+    .signature-first-name { color: #36265F; }
+    .signature-role { font-size: 14px; line-height: 19px; color: #000000; padding-bottom: 5px; border-bottom: 2px solid #62BEAC; }
+    .signature-contacts { font: 13px/23px Arial, Helvetica, sans-serif; }
+    .signature-contact { height: 23px; line-height: 23px; }
+    .signature-contact img { display: inline-block; width: 18px; height: 18px; vertical-align: middle; border: 0; }
+    .signature-contact a { color: #000000; text-decoration: none; vertical-align: middle; }
+  </style>
+</head>
+<body style="margin:0; padding:0;">
+  <!--[if mso]>
+  <table role="presentation" width="700" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="width:700px; border-collapse:collapse; table-layout:fixed; background-color:#FFFFFF; background-image:url('https://github.com/suportecarburgo/assinaturas/blob/main/ASSINATURA%20DE%20EMAIL/BG0.png?raw=true'); font-family:Arial, Helvetica, sans-serif; color:#000000;">
+    <tr>
+      <td width="18" bgcolor="#36265F" style="width:18px; background-color:#36265F; font-size:1px; line-height:1px;">&nbsp;</td>
+      <td width="380" valign="middle" bgcolor="#FFFFFF" style="width:380px; padding:10px 14px; background-color:#FFFFFF; font-family:Arial, Helvetica, sans-serif;">
+        <div style="font-family:Arial, Helvetica, sans-serif; font-size:20px; line-height:25px; font-weight:bold; color:#000000; mso-line-height-rule:exactly;"><span style="color:#36265F;">{{ first_name | e }}</span> {{ last_name | e }}</div>
+        <div style="font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:19px; font-weight:normal; color:#000000; padding:0 0 5px 0; border-bottom:2px solid #62BEAC; mso-line-height-rule:exactly;">{{ role | e }}</div>
+        <table role="presentation" width="352" cellpadding="0" cellspacing="0" border="0" style="width:352px; border-collapse:collapse;">
+          <tr><td width="352" height="8" style="width:352px; height:8px; font-size:1px; line-height:8px;">&nbsp;</td></tr>
+        </table>
+        <table role="presentation" width="352" cellpadding="0" cellspacing="0" border="0" style="width:352px; border-collapse:collapse; table-layout:fixed; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:24px; mso-line-height-rule:exactly;">
+          {% for email in listof_email %}
+          <tr height="24">
+            <td width="24" height="24" valign="middle" style="width:24px; height:24px; padding:0 6px 0 0;"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true" alt="E-mail" width="18" height="18" style="display:block; width:18px; height:18px; border:0;"></td>
+            <td width="328" height="24" valign="middle" style="width:328px; height:24px; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:24px; mso-line-height-rule:exactly;"><a href="mailto:{{ email | e }}" style="color:#000000; text-decoration:none;">{{ email | e }}</a></td>
+          </tr>
+          {% endfor %}
+          {% for phone in listof_phone %}
+          <tr height="24">
+            <td width="24" height="24" valign="middle" style="width:24px; height:24px; padding:0 6px 0 0;"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true" alt="Telefone" width="18" height="18" style="display:block; width:18px; height:18px; border:0;"></td>
+            <td width="328" height="24" valign="middle" style="width:328px; height:24px; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:24px; mso-line-height-rule:exactly;"><a href="tel:{{ phone[1] | e }}" style="color:#000000; text-decoration:none;">{{ phone[0] | e }}</a></td>
+          </tr>
+          {% endfor %}
+          <tr height="24">
+            <td width="24" height="24" valign="middle" style="width:24px; height:24px; padding:0 6px 0 0;"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true" alt="Site" width="18" height="18" style="display:block; width:18px; height:18px; border:0;"></td>
+            <td width="328" height="24" valign="middle" style="width:328px; height:24px; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:24px; mso-line-height-rule:exactly;"><a href="{{ website | e }}" style="color:#000000; text-decoration:none;">{{ website | e }}</a></td>
+          </tr>
+        </table>
+      </td>
+      <td width="4" bgcolor="#62BEAC" style="width:4px; background-color:#62BEAC; font-size:1px; line-height:1px;">&nbsp;</td>
+      <td width="280" valign="middle" align="center" bgcolor="#FFFFFF" style="width:280px; padding:10px; background-color:#FFFFFF;"><img src="{{ logo_url | e }}" alt="Logo" width="250" height="151" style="display:block; width:250px; height:151px; border:0;"></td>
+      <td width="18" bgcolor="#36265F" style="width:18px; background-color:#36265F; font-size:1px; line-height:1px;">&nbsp;</td>
+    </tr>
+  </table>
+  <![endif]-->
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-    </head>
-
-    <body>
-        <div class="main-wraper">
-            <div class="content-grid">
-
-                <div class="name infos-sect" style="grid-area: nome;">
-                    <h2><span style="color: #36265F">{{first_name}}</span> {{last_name}}</h2>
-                    <h3>{{role}}</h3>
-                </div>
-                
-                <div class="social-icons infos-sect" style="grid-area: telefone;">
-                    {% for email in listof_email%}
-                    <div class="single-icon">        
-                        <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true> <a href="mailto:{{email}}">{{email}}</a>
-                    </div>
-                    {% endfor %}
-
-                    {% for phone in listof_phone%}
-                    <div class="single-icon">
-                        <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true><a href="tel:{{phone[1]}}">{{phone[0]}}</a>
-                    </div>
-                    {% endfor %}
-
-                    <div class="single-icon">        
-                        <img src=https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true> <a href="{{website}}">{{website}}</a>
-                    </div>
-                </div>
-
-                <div class="logos-sect" style="grid-area: foto;">
-                    <img src="{{logo_url}}" style="width: 30vw;">
-                </div>
-
-            </div>
+  <!--[if !mso]><!-- -->
+  <div class="signature-shell">
+    <div class="signature-row">
+      <div class="signature-logo"><img src="{{ logo_url | e }}" alt="Logo" width="250" height="151"></div>
+      <div class="signature-info">
+        <div class="signature-person"><span class="signature-first-name">{{ first_name | e }}</span> {{ last_name | e }}</div>
+        <div class="signature-role">{{ role | e }}</div>
+        <div class="signature-contacts">
+          {% for email in listof_email %}
+          <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true" alt="E-mail" width="18" height="18">&nbsp;<a href="mailto:{{ email | e }}">{{ email | e }}</a></div>
+          {% endfor %}
+          {% for phone in listof_phone %}
+          <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true" alt="Telefone" width="18" height="18">&nbsp;<a href="tel:{{ phone[1] | e }}">{{ phone[0] | e }}</a></div>
+          {% endfor %}
+          <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true" alt="Site" width="18" height="18">&nbsp;<a href="{{ website | e }}">{{ website | e }}</a></div>
         </div>
-    </body>
+      </div>
+    </div>
+  </div>
+  <!--<![endif]-->
+</body>
 </html>
-
-<style>
-    *{
-        box-sizing: border-box;
-        margin: 0;
-        clear: both;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    @media (width < 800px) {
-        h2 {
-            font-size: 20px !important;
-            padding: 1em !important;
-            padding-bottom: 3px !important;
-        }
-
-        h3 {
-            font-size: 15px !important;
-            padding: 1em !important;
-            padding-top: 3px !important;
-        }
-        
-        a {
-            font-size: 12px;
-        }
-        .single-icon img {
-            height: 32px !important;
-        }
-    }
-
-    .infos-sect h2{
-        padding: 50px;
-        padding-bottom: 6px;
-        font-size: 30px;
-        color: #000;
-    }
-
-    .name {
-        width: 100%;
-        align-self: center;
-        text-align: center;
-    }
-
-    .main-wraper{
-        padding: 0px 5vw;
-        max-height: 600px;
-        min-width: 580px;
-        max-width: 1400px;
-        background-image: url('https://github.com/suportecarburgo/assinaturas/blob/main/ASSINATURA%20DE%20EMAIL/BG0.png?raw=true');
-        background-repeat: no-repeat;
-        background-size: 200dvh auto;
-        background-position: right center;
-
-        border-right: #36265F 45px solid;
-        border-left: #36265F 45px solid;
-    }
-
-    .content-grid{
-        display: grid;
-
-        justify-items: center;
-        align-items: center;
-        grid-template-areas: 
-            "nome nome"
-            "telefone foto"
-        ;
-
-        grid-template-columns: auto 40vw;
-        grid-template-rows: 30% auto;
-
-        @media (width < 800px) {
-
-            .logos-sect {
-                padding-left: 0px !important;
-            }
-
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: auto auto;
-            
-            grid-template-areas: 
-                "foto foto"
-                "nome telefone"
-            ;
-
-        }
-    }
-
-    .social-icons{
-        margin: 15px 0;
-
-        @media (width > 800px) {
-            padding-right: 2em;
-            border-right: 3px solid #62BEAC;
-        }
-
-        @media (width < 800px) {
-            border-left: 3px solid #62BEAC;
-            padding-left: 2em !important;
-            justify-self: left;
-        }
-    }
-
-    .single-icon {
-        display: flex;
-        align-items: center;
-    }
-
-    .single-icon a{
-        color: #000;
-        text-decoration: none;
-        margin: 15px;
-    }
-
-    .single-icon img{
-        height: 40px;
-    }
-</style>
