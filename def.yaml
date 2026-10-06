@@ -40,6 +40,5 @@
 
 - name: "Omoda"
   template_path: "templates/default.j2.html"
-  logo_url: https://raw.githubusercontent.com/suportecarburgo/assinaturas/refs/heads/main/ASSINATURA%20DE%20EMAIL/logo%20peugeot%20eiffel%20premiere.png
-  website: "https://www.eiffelpeugeot.com.br"
-
+  logo_url: https://raw.githubusercontent.com/suportecarburgo/assinaturas/refs/heads/main/ASSINATURA%20DE%20EMAIL/omoda_jaecoo_carburgo.png
+  website: "https://carburgoomodajaecoo.com.br"
