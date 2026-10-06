@@ -7,7 +7,9 @@ Este arquivo é um template Jinja2. O programa deve fornecer:
 - logo_url e website: URLs públicas do logo e do site;
 - listof_email: lista de endereços de e-mail;
 - listof_phone: lista de pares [texto_exibido, telefone_para_link], por exemplo:
-  [["(51) 3594-9458", "5135949458"]].
+  [["(51) 3594-9458", "5135949458"]]. O telefone é filtrado para manter apenas dígitos
+  e exibido com máscara para 10 ou 11 dígitos. O prefixo 55 é retirado apenas da exibição;
+  o link tel: mantém todos os dígitos.
 
 Fluxo de renderização:
 1. Outlook clássico seleciona o ramo MSO, construído com tabela e larguras fixas.
@@ -20,6 +22,24 @@ Fluxo de renderização:
 Os comentários condicionais MSO no corpo são funcionais: não removê-los. A largura total
 é 700 px; se ela for alterada, revisar as larguras das colunas nos dois ramos.
 #}
+{% macro phone_digits(value) -%}
+{%- for char in value|string -%}
+{%- if char in '0123456789' -%}{{ char }}{%- endif -%}
+{%- endfor -%}
+{%- endmacro -%}
+{% macro phone_display(value) -%}
+{%- set digits = phone_digits(value) -%}
+{%- if (digits|length == 12 or digits|length == 13) and digits[:2] == '55' -%}
+{%- set digits = digits[2:] -%}
+{%- endif -%}
+{%- if digits|length == 10 -%}
+({{ digits[:2] }}) {{ digits[2:6] }}-{{ digits[6:10] }}
+{%- elif digits|length == 11 -%}
+({{ digits[:2] }}) {{ digits[2:7] }}-{{ digits[7:11] }}
+{%- else -%}
+{{ digits }}
+{%- endif -%}
+{%- endmacro -%}
 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -83,9 +103,10 @@ Os comentários condicionais MSO no corpo são funcionais: não removê-los. A l
           </tr>
           {% endfor %}
           {% for phone in listof_phone %}
+          {% set phone_number = phone_digits(phone[1]) %}
           <tr height="24">
             <td width="24" height="24" valign="middle" style="width:24px; height:24px; padding:0 6px 0 0;"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true" alt="Telefone" width="18" height="18" style="display:block; width:18px; height:18px; border:0;"></td>
-            <td width="328" height="24" valign="middle" style="width:328px; height:24px; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:24px; mso-line-height-rule:exactly;"><a href="tel:{{ phone[1] | e }}" style="color:#000000; text-decoration:none;">{{ phone[0] | e }}</a></td>
+            <td width="328" height="24" valign="middle" style="width:328px; height:24px; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:24px; mso-line-height-rule:exactly;"><a href="tel:{{ phone_number }}" style="color:#000000; text-decoration:none;">{{ phone_display(phone[0]) }}</a></td>
           </tr>
           {% endfor %}
           <tr height="24">
@@ -113,7 +134,8 @@ Os comentários condicionais MSO no corpo são funcionais: não removê-los. A l
           <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/EMAIL0.png?raw=true" alt="E-mail" width="18" height="18">&nbsp;<a href="mailto:{{ email | e }}">{{ email | e }}</a></div>
           {% endfor %}
           {% for phone in listof_phone %}
-          <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true" alt="Telefone" width="18" height="18">&nbsp;<a href="tel:{{ phone[1] | e }}">{{ phone[0] | e }}</a></div>
+          {% set phone_number = phone_digits(phone[1]) %}
+          <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/TELEFONE0.png?raw=true" alt="Telefone" width="18" height="18">&nbsp;<a href="tel:{{ phone_number }}">{{ phone_display(phone[0]) }}</a></div>
           {% endfor %}
           <div class="signature-contact"><img src="https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/SITE0.png?raw=true" alt="Site" width="18" height="18">&nbsp;<a href="{{ website | e }}">{{ website | e }}</a></div>
         </div>
