@@ -20,7 +20,7 @@
 
 - name: "Citroen Premiere"
   logo_url: "https://github.com/suportecarburgo/assinaturas/blob/main/ModelosDeAssinatura/premiere_citroen.png?raw=true"
-  website: "https://www.citroenpremiere.com.br/"
+  website: "https://www.carburgocitroen.com.br/"
   template_path: "templates/default.j2.html"
 
 - name: "Carburgo"
